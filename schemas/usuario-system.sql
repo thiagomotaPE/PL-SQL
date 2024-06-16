@@ -1,0 +1,24 @@
+-- criando base de dados
+CREATE TABLESPACE analistadedados
+DATAFILE '/opt/oracle/oradata/XE/analistadedados.dbf'
+SIZE 100M AUTOEXTEND ON NEXT 50M MAXSIZE 500M
+ONLINE
+EXTENT MANAGEMENT LOCAL AUTOALLOCATE
+SEGMENT SPACE MANAGEMENT AUTO;
+
+-- criando usuario e dando permissões
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+
+CREATE USER analistadedados IDENTIFIED BY system
+DEFAULT TABLESPACE analistadedados
+TEMPORARY TABLESPACE temp;
+
+GRANT CREATE SESSION, CONNECT, RESOURCE TO analistadedados;
+GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW TO analistadedados;
+GRANT CREATE SEQUENCE TO analistadedados;
+GRANT SELECT, INSERT, UPDATE, DELETE ON analistadedados.PRODUTOS TO analistadedados;
+GRANT UNLIMITED TABLESPACE TO analistadedados;
+
+-- verificando usuario na tabela ALL_USERS
+SELECT * FROM ALL_USERS
+ORDER BY USERNAME;
